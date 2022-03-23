@@ -4,7 +4,17 @@ const todoInput = document.querySelector("#inputTodo");
 const todoButton = document.querySelector("#addTodoButton");
 
 const todoLists = document.getElementById("lists");
+const messageElement = document.getElementById("message");
 
+// show message
+const showMessage = (text, status) => {
+    messageElement.textContent = text;
+    messageElement.classList.add(`bg-${status}`);
+    setTimeout(() => {
+        messageElement.textContent = "";
+        messageElement.classList.remove(`bg-${status}`);
+    }, 1000);
+};
 // createTodo
 
 const createTodo = (todoId, todoValue) => {
@@ -17,7 +27,19 @@ const createTodo = (todoId, todoValue) => {
     class="fa fa-trash"> </i> </button> </span>
     `;
     todoLists.appendChild(todoElement);
+    const deleteButton = todoElement.querySelector("#deleteButton")
+    deleteButton.addEventListener("click", deleteTodo)
+};
+// deleteTodo
+const deleteTodo = (e) => {
+    const selectedTodo = e.target.parentElement.parentElement.parentElement;
 
+    todoLists.removeChild(selectedTodo);
+}
+// getTodosFromLocalStorage
+const getTodosFromLocalStorage = () => {
+    return localStorage.getItem("mytodos")
+        ? JSON.parse(localStorage.getItem("mytodos")) : [];
 }
 
 // addTodo
@@ -29,6 +51,15 @@ const addTodo = (e) => {
     // unique id
     const todoId = Date.now().toString();
     createTodo(todoId, todoValue);
+    showMessage("todo is added", "success");
+
+    // add todo to localStorage
+
+    const todos = getTodosFromLocalStorage();
+    todos.push({ todoId, todoValue });
+    localStorage.setItem("mytodos", JSON.stringify(todos));
+
+    todoInput.value = "";
 
 
 };

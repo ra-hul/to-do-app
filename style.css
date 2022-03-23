@@ -67,4 +67,23 @@ input{
     padding: 0.5rem;
     border-radius: 0.6rem;
     margin:1rem 0;
+    transition: all 0.3s;
+}
+.li-style:hover{
+    background-color: #111;
+}
+
+.bg-success{
+    margin: 0.5rem;
+    padding: 0.5em;
+    color: black;
+    background-color: #ddffdd;
+    border-left: 6px solid #04aa6d;
+}
+.bg-danger{
+    margin: 0.5rem;
+    padding: 0.5em;
+    color: black;
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
 }
