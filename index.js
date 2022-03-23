@@ -35,7 +35,13 @@ const deleteTodo = (e) => {
     const selectedTodo = e.target.parentElement.parentElement.parentElement;
 
     todoLists.removeChild(selectedTodo);
-}
+    showMessage("todo is deleted", "danger");
+
+
+    let todos = getTodosFromLocalStorage();
+    todos = todos.filter((todo) => todo.todoId != selectedTodo.id);
+    localStorage.setItem("mytodos", JSON.stringify(todos));
+};
 // getTodosFromLocalStorage
 const getTodosFromLocalStorage = () => {
     return localStorage.getItem("mytodos")
@@ -63,6 +69,13 @@ const addTodo = (e) => {
 
 
 };
+// load todo
+const LoadTodos = () => {
+    const todos = getTodosFromLocalStorage();
+    todos.map((todo) => createTodo(todo.todoId, todo.todoValue))
+};
 
 // adding listeners
 todoForm.addEventListener("submit", addTodo);
+window.addEventListener("DOMContentLoaded", LoadTodos);
+
